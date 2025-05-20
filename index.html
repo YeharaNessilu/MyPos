@@ -1,0 +1,493 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="assest/lib/normalize.css">
+    <link href="https://fonts.googleapis.com/css2?family=Exo+2&family=Philosopher&family=Raleway&display=swap" rel="stylesheet">
+
+    <style>
+        * {
+            font-family: "Palatino Linotype", sans-serif;
+            font-optical-sizing: auto;
+            font-weight: 400;
+            font-style: normal;
+            font-variation-settings: "slnt" 0;
+        }
+
+        body {
+            background-color: #290101;
+            color: white;
+            font-family: 'Segoe UI', sans-serif;
+        }
+
+        .navbar {
+            background-color: transparent;
+        }
+        .nav-link {
+            color: white !important;
+            font-weight: 500;
+        }
+
+        .hero-section {
+            padding: 60px 0;
+        }
+        .hero-text h1 {
+            font-size: 3rem;
+            font-weight: 700;
+        }
+        .hero-text h1 span {
+            color: #e60000;
+        }
+        .hero-text p {
+            color: #555;
+            margin-top: 1rem;
+            max-width: 400px;
+        }
+        .search-box {
+            margin-top: 2rem;
+            max-width: 420px;
+            box-shadow: 0 5px 25px rgba(0,0,0,0.1);
+            border-radius: 6px;
+            overflow: hidden;
+        }
+        .search-box input {
+            border: none;
+            padding: 12px 16px;
+            width: 75%;
+            outline: none;
+        }
+        .search-box button {
+            border: none;
+            background-color: #e60000;
+            color: white;
+            padding: 12px 20px;
+            width: 25%;
+        }
+        .burger-img {
+            max-width: 100%;
+        }
+
+
+
+        .container-fluid {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 60px;
+            width: 100%;
+            background-color: burlywood;
+            position: sticky;
+            margin-top: -8px;
+        }
+
+        .card-title{
+            background-color: darkkhaki;
+        }
+        .navbar .nav-link:hover {
+            color: blue;
+        }
+        #Navbar .navbar-nav {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 100%;
+            font-size: 25px;
+        }
+
+
+        #Frame{
+            width: 80%;
+            height: 700px;
+            background-color: lightgray;
+            box-shadow: 0 0 10px rgba(0,0,0,0.8);
+        }
+
+        #Cus{
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 35px;
+        }
+
+        #newCustomerBTN{
+            display: flex;
+            justify-content: end;
+            align-items: end;
+            margin-right: 100px;
+            margin-top: -215px;
+        }
+
+        #itemDetails{
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-right: 20px;
+        }
+
+        #BTNGroup{
+            display: flex;
+            justify-content: end;
+            align-items: center;
+            margin-right: 100px;
+        }
+        .table{
+            margin-bottom: 75px;
+        }
+        .TableDiv{
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-top: 50px;
+        }
+        #BTN{
+            margin-left: 100px;
+            margin-bottom: 5px;
+        }
+
+        .card{
+            margin-left: 100px;
+            background-color: white;
+        }
+
+        #itemDetails{
+            display: none;
+        }
+
+        .card-header {
+            background-color: darkkhaki;
+            color: white;
+            font-size: 20px;
+            font-weight: bolder;
+            border: 1px solid black;
+        }
+
+        .card-body{
+            background-color: #f8f9fa;
+            border: 1px solid black;
+        }
+
+        .total-box {
+            background-color: #f8f9fa;
+            padding: 20px;
+            border: 1px solid black;
+        }
+        .total-box h5, .total-box p {
+            margin: 0;
+        }
+        .table-striped{
+            border: 1px solid grey;
+        }
+
+        #orderDetails{
+            display: none;
+        }
+
+        .hero-section{
+            display: block;
+        }
+
+        section {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 20px;
+            flex-wrap: wrap;
+            padding: 20px;
+            margin-top: 100px;
+        }
+        .btn-primary{
+            margin-left:40px;
+        }
+
+        #customerPage{
+            display: none;
+        }
+    </style>
+</head>
+<body>
+<!-- Navbar -->
+<nav class="navbar navbar-expand-lg">
+    <div class="container">
+        <a class="navbar-brand" href="#"><img src="burgers-logo-with-hamburger-sandwich-illustration-704081694862634vnmcigmwcj.png" width="50px"></a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+            <span class="navbar-toggler-icon" style="filter: invert(1);"></span>
+        </button>
+        <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
+            <ul class="navbar-nav">
+                <li class="nav-item"><a class="nav-link active" href="#" id="home_nav">Home</a></li>
+                <li class="nav-item"><a class="nav-link" href="#" id="customer_nav">Customer</a></li>
+                <li class="nav-item"><a class="nav-link" href="#" id="item_nav">Store</a></li>
+                <li class="nav-item"><a class="nav-link" href="#" id="order_nav">Order</a></li>
+
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<!-- Hero Section -->
+<section class="hero-section" id="homePage">
+    <div class="container">
+        <div class="row align-items-center">
+            <!-- Text Content -->
+            <div class="col-md-6 hero-text">
+                <h1>Welcome to<br><span>The world of</span><br>Testy & Fresh Food.</h1>
+                <p>Keep it easy with these simple but delicious recipes from make-ahead lunches and midweek meals to fuss-free sides.</p>
+
+                <div class="search-box d-flex">
+                    <input type="text" placeholder="Search, Burger">
+                    <button>Search</button>
+                </div>
+            </div>
+
+            <!-- Burger Image -->
+            <div class="col-md-6 text-center mt-4 mt-md-0">
+                <img src="sk-uVPV_nV17Tw-unsplash-removebg-preview.png" alt="Burger" class="burger-img"/>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section id="customerPage">
+    <main class="container mt-4">
+        <div class="card p-3 mb-4">
+            <h4 class="card-title">Add New Customer</h4>
+            <form id="customer_form">
+                <div class="row">
+                    <div class="col-md-3 mb-3">
+                        <label for="id" class="form-label">Customer ID</label>
+                        <input type="text" class="form-control" id="id" placeholder="Enter Customer ID">
+                    </div>
+                    <div class="col-md-3 mb-3">
+                        <label for="name" class="form-label">Customer Name</label>
+                        <input type="text" class="form-control" id="name" placeholder="Enter Customer Name">
+                    </div>
+                    <div class="col-md-3 mb-3">
+                        <label for="address" class="form-label">Address</label>
+                        <input type="text" class="form-control" id="address" placeholder="Enter Address">
+                    </div>
+                    <div class="col-md-3 mb-3">
+                        <label for="contact" class="form-label">Phone Number</label>
+                        <input type="tel" class="form-control" id="contact" placeholder="Enter Phone Number">
+                    </div>
+                </div>
+
+                <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                    <button type="button" class="btn btn-success" id="customer_save">Save</button>
+                    <button type="button" class="btn btn-warning" id="customer_update">Update</button>
+                    <button type="button" class="btn btn-danger" id="customer_delete">Delete</button>
+                </div>
+            </form>
+        </div>
+
+        <div class="card p-3">
+            <h4 class="card-title">Customers</h4>
+            <table class="table table-bordered table-striped">
+                <thead class="table-dark">
+                <tr>
+                    <th scope="col">Id</th>
+                    <th scope="col">Name</th>
+                    <th scope="col">Address</th>
+                    <th scope="col">Contact No</th>
+                </tr>
+                </thead>
+                <tbody id="customer_tbody">
+
+                </tbody>
+            </table>
+        </div>
+    </main>
+</section>
+
+
+
+<section id="itemDetails">
+    <main class="container mt-4">
+        <div class="card p-4">
+            <h4>Add New Item</h4>
+            <div class="row mb-3">
+                <div class="col-md-3">
+                    <label for="code" class="form-label">Item Code</label>
+                    <input type="text" class="form-control" id="code" placeholder="Enter Item Code">
+                </div>
+                <div class="col-md-3">
+                    <label for="iName" class="form-label">Item Name</label>
+                    <input type="text" class="form-control" id="iName" placeholder="Enter Item Name">
+                </div>
+                <div class="col-md-3">
+                    <label for="qty" class="form-label">Quantity</label>
+                    <input type="text" class="form-control" id="qty" placeholder="Enter Quantity">
+                </div>
+                <div class="col-md-3">
+                    <label for="price" class="form-label">Price</label>
+                    <input type="text" class="form-control" id="price" placeholder="Enter Price">
+                </div>
+            </div>
+            <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                <button type="button" class="btn btn-success" id="item-save">Save</button>
+                <button type="button" class="btn btn-warning" id="item_update">Update</button>
+                <button type="button" class="btn btn-danger" id="item_delete">Delete</button>
+            </div>
+        </div>
+
+        <div class="card mt-4 p-3">
+            <h4>Item List</h4>
+            <table class="table table-bordered table-striped">
+                <thead class="table-dark">
+                <tr>
+                    <th scope="col">Code</th>
+                    <th scope="col">Name</th>
+                    <th scope="col">Price</th>
+                    <th scope="col">Qty</th>
+                </tr>
+                </thead>
+                <tbody id="item_tbody">
+
+                </tbody>
+            </table>
+        </div>
+    </main>
+</section>
+
+
+
+<section id="orderDetails">
+    <main class="container mt-5">
+        <div class="row">
+            <!-- Invoice Details -->
+            <div class="col-md-4">
+                <div class="card">
+                    <div class="card-header">Invoice Details</div>
+                    <div class="card-body">
+                        <div class="mb-3">
+                            <label class="form-label">Order ID:</label>
+                            <input type="text" class="form-control" id="oId" />
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Customer ID:</label>
+                            <input type="text" class="form-control" id="cId" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Item Select -->
+            <div class="col-md-4">
+                <div class="card">
+                    <div class="card-header">Item Select</div>
+                    <div class="card-body">
+                        <div class="mb-3">
+                            <label class="form-label">Item Code:</label>
+                            <input type="text" class="form-control" id="iCode" />
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Order Quantity:</label>
+                            <input type="number" class="form-control" id="oQty" />
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Price:</label>
+                            <input type="number" class="form-control" id="oPrice" />
+                        </div>
+                        <div class="d-flex gap-2">
+                            <button class="btn btn-success w-100" id="orderDetails_save">Add Item</button>
+                            <button class="btn btn-warning w-100" id="orderDetails_update">Update</button>
+                            <button class="btn btn-danger w-100" id="orderDetails_delete">Delete</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Total & Payment -->
+            <div class="col-md-4">
+                <div class="total-box border rounded p-3">
+                    <h5>Total: <strong id="totalDisplay">0.00</strong></h5>
+                    <p class="text-danger">SubTotal: <span id="subTotalDisplay">0.00</span></p>
+                    <div class="mb-3">
+                        <label class="form-label">Cash:</label>
+                        <input type="text" class="form-control" id="cash" />
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Discount:</label>
+                        <input type="text" class="form-control" id="discount" />
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Balance:</label>
+                        <input type="text" class="form-control" id="balance" />
+                    </div>
+                    <button class="btn btn-success w-100">Purchase</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Order Table -->
+        <div class="mt-5">
+            <table class="table table-striped">
+                <thead class="table-success">
+                <tr>
+                    <th scope="col">Order Id</th>
+                    <th scope="col">Customer ID</th>
+                    <th scope="col">Item Code</th>
+                    <th scope="col">Quantity</th>
+                    <th scope="col">Price</th>
+                    <th scope="col">Total</th>
+                </tr>
+                </thead>
+                <tbody id="order_tbody">
+
+                </tbody>
+            </table>
+        </div>
+    </main>
+
+</section>
+
+
+<script src="assest/lib/jquery-3.7.1.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script src="controller/CustomerController.js" type="module"></script>
+<script src="controller/ItemController.js" type="module"></script>
+<script src="controller/OrderController.js" type="module"></script>
+<script>
+    $("#customer_nav").on('click', function () {
+        $("#customerPage").css("display", "block");
+        $("#homePage").css("display", "none");
+        $("#itemDetails").css("display", "none");
+        $("#orderDetails").css("display", "none");
+        $("#signUpPage").css("display", "none");
+        $("#loginPage").css("display", "none");
+    });
+
+    $("#item_nav").on('click', function () {
+        $("#customerPage").css("display", "none");
+        $("#homePage").css("display", "none");
+        $("#itemDetails").css("display", "block");
+        $("#orderDetails").css("display", "none");
+        $("#signUpPage").css("display", "none");
+        $("#loginPage").css("display", "none");
+    });
+
+    $("#order_nav").on('click', function () {
+        $("#customerPage").css("display", "none");
+        $("#homePage").css("display", "none");
+        $("#itemDetails").css("display", "none");
+        $("#orderDetails").css("display", "block");
+        $("#signUpPage").css("display", "none");
+        $("#loginPage").css("display", "none");
+    })
+
+    $("#home_nav").on('click', function () {
+        $("#homePage").css("display", "block");
+        $("#customerPage").css("display", "none");
+        $("#itemDetails").css("display", "none");
+        $("#orderDetails").css("display", "none");
+        $("#signUpPage").css("display", "none");
+        $("#loginPage").css("display", "none");
+    });
+
+
+
+
+</script>
+</body>
+</html>
