@@ -1,11 +1,19 @@
-import {item_db} from "../db/db.js";
+import {item_db} from "../db/DB.js";
 import ItemModel from "../model/ItemModel.js";
 
-$("#item-save").on('click',function (){
+let idx = -1;
+
+document.addEventListener("DOMContentLoaded", function () {
+    if (document.getElementById("code")) {
+        loadItemIds();
+    }
+});
+
+$("#item_save").on('click',function (){
     let code = $('#code').val();
     let iName = $('#iName').val();
     let price = $('#price').val();
-    let qty = $('#qty').val();
+    let qty = $('#i-qty').val();
 
     if (code === '' || iName === ''|| price === '' || qty === ''){
         Swal.fire({
@@ -30,6 +38,7 @@ $("#item-save").on('click',function (){
             icon: "success",
             draggable: true
         });
+        loadItemIds();
     }
 })
 
@@ -52,7 +61,6 @@ function loadTableData(){
     })
 }
 
-let idx = -1;
 
 $("#item_tbody").on('click', 'tr', function () {
     idx = $(this).index();
@@ -69,7 +77,7 @@ $("#item_tbody").on('click', 'tr', function () {
     $("#code").val(code);
     $("#iName").val(iName);
     $("#price").val(price);
-    $("#qty").val(qty);
+    $("#i-qty").val(qty);
 })
 
 $("#item_update").on('click',function () {
@@ -81,7 +89,7 @@ $("#item_update").on('click',function () {
     let code = $('#code').val();
     let iName = $('#iName').val();
     let price = $('#price').val();
-    let qty = $('#qty').val();
+    let qty = $('#i-qty').val();
 
     item_db[idx].code = code;
     item_db[idx].iName = iName;
@@ -97,6 +105,7 @@ $("#item_update").on('click',function () {
         title: "Updated Successfully!",
         icon: "success",
     });
+    loadItemIds();
 })
 
 $("#item_delete").on('click',function () {
@@ -125,13 +134,20 @@ $("#item_delete").on('click',function () {
                 text: 'The Customer has been removed.',
                 icon: 'success'
             });
+            loadItemIds();
         }
     })
 })
 
+
+function loadItemIds(){
+    let count = item_db.length + 1;
+    let newId = "I" + count.toString().padStart(3, "0");
+    $('#code').val(newId);
+}
 function clear(){
     $('#code').val('');
     $('#iName').val('');
     $('#price').val('');
-    $('#qty').val('');
+    $('#i-qty').val('');
 }

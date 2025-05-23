@@ -1,4 +1,5 @@
-import {signUp_db} from "../db/db.js";
+import {signUp_db} from "../db/DB.js";
+
 
 $('#login_login').on('click',function () {
     let userName = $('#userName').val();
@@ -10,7 +11,22 @@ $('#login_login').on('click',function () {
         Swal.fire({
             title: "Login Successfully!",
             icon: "success",
-        });
+        }).then((result)=>{
+            if (result.isConfirmed){
+                $('#loginPage').css("display","none");
+                $('#customerPage').css("display","block");
+                $('#customer_nav').css("display","block");
+                $('#item_nav').css("display","block");
+                $('#order_nav').css("display","block");
+                $('#signup_nav').css("display","none");
+                $('#login_nav').css("display","none");
+
+                $('#userName').val('');
+                $('#inputLoginPassword6').val('');
+            }
+        })
+
+
     } else {
         Swal.fire({
             title: 'Error!',

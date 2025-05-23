@@ -1,114 +1,156 @@
+import {orderDetails_db} from "../db/DB.js";
+import {customer_db} from "../db/DB.js";
+import {item_db} from "../db/DB.js";
 
-import { orders_db } from "../db/db.js";
-import OrdersModel from "../model/OrdersModel.js";
+import OrderDetailsModel from "../model/OrderModel.js";
 
-let selectedIndex = -1;
 
-function clearFields() {
-    $("#oId").val('');
-    $("#cId").val('');
-    $("#iCode").val('');
-    $("#oQty").val('');
-    $("#oPrice").val('');
+let idx = -1;
+
+function loadOrderIds(){
+    let count = orderDetails_db.length;
+    $('#oId').val(count+1);
 }
 
-export function loadTableData() {
-    $("#order_tbody").empty();
-    let total = 0;
-    orders_db.forEach((order, index) => {
-        const rowTotal = order.oQty * order.oPrice;
-        total += rowTotal;
-        const row = `
-            <tr>
-                <td>${index + 1}</td>
-                <td>${order.cId}</td>
-                <td>${order.iCode}</td>
-                <td>${order.oQty}</td>
-                <td>${order.oPrice}</td>
-                <td>${rowTotal.toFixed(2)}</td>
-            </tr>
-        `;
-        $("#order_tbody").append(row);
-    });
+document.addEventListener("DOMContentLoaded", function () {
 
-    $("#subTotalDisplay").text(total.toFixed(2));
-    $("#totalDisplay").text(total.toFixed(2));
-}
+    if (document.getElementById("oId")) {
+        loadOrderIds();
+    }
+    if (document.getElementById("date")){
+        const today = new Date();
+        const year = today.getFullYear();
+        const month = String(today.getMonth() + 1).padStart(2, '0'); // months are 0-indexed
+        const day = String(today.getDate()).padStart(2, '0');
+        const formattedDate = `${year}-${month}-${day}`;
 
-export function handleSave() {
-    const oId = $("#oId").val();
-    const cId = $("#cId").val();
-    const iCode = $("#iCode").val();
-    const oQty = $("#oQty").val();
-    const oPrice = $("#oPrice").val();
-
-    if (!oId || !cId || !iCode || !oQty || !oPrice) {
-        return Swal.fire("Error", "All fields are required!", "error");
+        $('#date').val(formattedDate);
     }
 
-    const newOrder = new OrdersModel(oId, cId, iCode, oQty, oPrice);
-    orders_db.push(newOrder);
-    loadTableData();
-    clearFields();
-    Swal.fire("Success", "Item added successfully!", "success");
-}
 
-export function handleRowClick() {
-    $("#order_tbody").on("click", "tr", function () {
-        selectedIndex = $(this).index();
-        const order = orders_db[selectedIndex];
-        $("#oId").val(order.oId);
-        $("#cId").val(order.cId);
-        $("#iCode").val(order.iCode);
-        $("#oQty").val(order.oQty);
-        $("#oPrice").val(order.oPrice);
-    });
-}
+    const select = document.getElementById("cId");
+    select.innerHTML = '<option disabled selected>Select Customer</option>';
 
-export function handleUpdate() {
-    if (selectedIndex === -1) {
-        return Swal.fire("Error", "Please select an order to update!", "warning");
-    }
+    $('#cId').on('click',function () {
 
-    orders_db[selectedIndex].oId = $("#oId").val();
-    orders_db[selectedIndex].cId = $("#cId").val();
-    orders_db[selectedIndex].iCode = $("#iCode").val();
-    orders_db[selectedIndex].oQty = $("#oQty").val();
-    orders_db[selectedIndex].oPrice = $("#oPrice").val();
-
-    loadTableData();
-    clearFields();
-    selectedIndex = -1;
-    Swal.fire("Success", "Item updated successfully!", "success");
-}
-
-export function handleDelete() {
-    if (selectedIndex === -1) {
-        return Swal.fire("Error", "Please select an order to delete!", "warning");
-    }
-
-    Swal.fire({
-        title: "Are you sure?",
-        text: "This item will be deleted permanently.",
-        icon: "warning",
-        showCancelButton: true,
-        confirmButtonText: "Yes, delete it!"
-    }).then((result) => {
-        if (result.isConfirmed) {
-            orders_db.splice(selectedIndex, 1);
-            loadTableData();
-            clearFields();
-            selectedIndex = -1;
-            Swal.fire("Deleted!", "Item deleted successfully!", "success");
+        while (select.options.length > 1) {
+            select.remove(1);
         }
-    });
+
+        customer_db.forEach(cus => {
+            const option = document.createElement("option");
+            option.value = cus.id;
+            option.textContent = cus.id; // You can show ID + name
+            select.appendChild(option);
+        });
+    })
+
+    const selectItem = document.getElementById("order_item_id");
+    selectItem.innerHTML = '<option disabled selected>Select Item</option>';
+
+    $('#order_item_id').on('click',function () {
+
+        while (selectItem.options.length > 1) {
+            selectItem.remove(1);
+        }
+
+        // Loop through the array and add options
+        item_db.forEach(item => {
+            const optionNew = document.createElement("option");
+            optionNew.value = item.code;
+            optionNew.textContent = item.code; // You can show ID + name
+            selectItem.appendChild(optionNew);
+        });
+        console.log("item data :", item_db);
+    })
+
+});
+
+document.getElementById("cId").addEventListener("change", function () {
+    const selectedId = this.value;
+    const selectedCustomer = customer_db.find(cus => cus.id === selectedId);
+    if (selectedCustomer) {
+        console.log("Selected Customer:", selectedCustomer);
+        // e.g. update form fields
+        document.getElementById("cus_name").value = selectedCustomer.name;
+        document.getElementById("cus_address").value = selectedCustomer.address;
+        document.getElementById("cus_contact").value = selectedCustomer.contact;
+    }
+});
+
+document.getElementById("order_item_id").addEventListener("change", function () {
+    const selectedId = this.value;
+    const selectedItem = item_db.find(item => item.code === selectedId);
+    if (selectedItem) {
+        console.log("Selected Item:", selectedItem);
+        // e.g. update form fields
+        document.getElementById("item_name").value = selectedItem.iName;
+        document.getElementById("item_price").value = selectedItem.price;
+        document.getElementById("item_qty").value = selectedItem.qty;
+    }
+});
+
+$('#btn_add_item').on('click', function () {
+    let itemPrice = $('#item_price').val();
+    let qtyOnHand = $('#item_qty').val();
+    let orderQty = $('#order_qty').val();
+
+    let oId = $('#oId').val();
+    let cId = $('#cId').val();
+    let code = $('#order_item_id').val();
+    let date = $('#date').val();
+
+    let total = itemPrice * orderQty;
+
+    if (qtyOnHand < orderQty){
+        Swal.fire({
+            title: 'Error!',
+            text: 'Out Of Stock',
+            icon: 'error',
+            confirmButtonText: 'Ok'
+        })
+
+    }else {
+        $('#tot').val(total);
+
+    }
+
+    let order_data = new OrderDetailsModel(oId,cId,code,date,orderQty,total);
+
+    orderDetails_db.push(order_data);
+    console.log("order data: ",orderDetails_db);
+
+    loadTableData();
+})
+
+$('#btn_purchase').on('click',function () {
+    let tot = $('#tot').val();
+    let discount = $('#discount').val();
+
+    $('#balance').val(tot-discount);
+})
+
+function loadTableData() {
+
+    $('#order_tbody').empty();
+
+    orderDetails_db.map((item,index)=>{
+        let oId = $('#oId').val();
+        let cId = $('#cId').val();
+        let code = $('#order_item_id').val();
+        let date = $('#date').val();
+        let qty = $('#order_qty').val();
+        let total = $('#tot').val();
+
+        let data = `<tr>
+            <td>${index+1}</td>
+            <td>${cId}</td>
+            <td>${code}</td>
+            <td>${date}</td>
+            <td>${qty}</td>
+            <td>${total}</td>
+        </tr>`
+
+        $('#order_tbody').append(data);
+    })
 }
-
-// Event Listeners for Button Actions
-$("#orderDetails_save").on('click', handleSave);
-$("#orderDetails_update").on('click', handleUpdate);
-$("#orderDetails_delete").on('click', handleDelete);
-
-// Initial Table Load
-loadTableData();
-handleRowClick();
